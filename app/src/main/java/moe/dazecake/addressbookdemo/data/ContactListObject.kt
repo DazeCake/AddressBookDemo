@@ -1,14 +1,15 @@
 package moe.dazecake.addressbookdemo.data
 
+import androidx.compose.runtime.mutableStateListOf
 import moe.dazecake.addressbookdemo.model.Contact
 import moe.dazecake.addressbookdemo.model.ContactInfo
 import moe.dazecake.addressbookdemo.utils.FileUtils
 
 object ContactListObject {
-    private var it: MutableList<Contact> = FileUtils.loadContacts()
+    private val it = mutableStateListOf<Contact>()
 
-    fun reLoad() {
-        it = FileUtils.loadContacts()
+    fun init() {
+        it.addAll(FileUtils.loadContacts())
     }
 
     fun save() {
@@ -16,21 +17,22 @@ object ContactListObject {
     }
 
     fun add(contact: Contact) {
-        it = (it + contact).toMutableList()
+        it.add(contact)
     }
 
     fun remove(contact: Contact) {
-        it = (it - contact).toMutableList()
+        it.remove(contact)
     }
 
     fun update(contact: Contact) {
-        it = it.map {
-            if (it.name == contact.name) {
+        val old = it.findLast { it.name == contact.name }
+        it.replaceAll {
+            if(it.name == contact.name){
                 contact
-            } else {
+            }else{
                 it
             }
-        }.toMutableList()
+        }
     }
 
     fun get(key: String, info:ContactInfo): Contact? {

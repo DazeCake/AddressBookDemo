@@ -100,11 +100,15 @@ fun AddressBookDemo() {
 
 @Composable
 fun init(context: Context) {
+    LaunchedEffect(key1 = Unit){
+        FileUtils.init(context)
+        ContactListObject.init()
+        ContactListObject.add(Contact("John Doe", "1234567890"))
+        ContactListObject.add(Contact("Jane Smith", "9876543210"))
+    }
 
-    FileUtils.init(context)
 
-    ContactListObject.add(Contact("John Doe", "1234567890"))
-    ContactListObject.add(Contact("Jane Smith", "9876543210"))
+
 }
 
 //@Composable
