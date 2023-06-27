@@ -9,6 +9,7 @@ object ContactListObject {
     private val it = mutableStateListOf<Contact>()
 
     fun init() {
+        it.clear()
         it.addAll(FileUtils.loadContacts())
     }
 
